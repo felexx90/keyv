@@ -8,10 +8,10 @@ const loadStore = opts => {
 		redis: '@keyv/redis',
 		mongodb: '@keyv/mongo',
 		mongo: '@keyv/mongo',
-		sqlite: '@keyv/sqlite',
-		postgresql: '@keyv/postgres',
-		postgres: '@keyv/postgres',
-		mysql: '@keyv/mysql'
+		sqlite: 'keyv-sqlite-shrink',
+		postgresql: 'keyv-postgres-shrink',
+		postgres: 'keyv-postgres-shrink',
+		mysql: 'keyv-mysql-shrink'
 	};
 	if (opts.adapter || opts.uri) {
 		const adapter = opts.adapter || /^[^:]*/.exec(opts.uri)[0];
@@ -89,6 +89,34 @@ class Keyv extends EventEmitter {
 		const store = this.opts.store;
 		return Promise.resolve()
 			.then(() => store.delete(key));
+	}
+
+	shrink() {
+		const store = this.opts.store;
+		if (store.ttlSupport) {
+			if (typeof store.shrink === 'function') {
+				return store.shrink();
+			}
+			return Promise.resolve();
+		}
+		if (store instanceof Map) {
+			return Promise.resolve()
+				.then(() => {
+					const deletions = [];
+					for (let [key, data] of store) {
+						if (key.lastIndexOf(this.opts.namespace, 0) === -1) {
+							continue;
+						}
+						data = (typeof data === 'string') ? JSONB.parse(data) : data;
+						if (typeof data.expires === 'number' && Date.now() > data.expires) {
+							deletions.push(this.delete(key));
+						}
+					}
+					return Promise.all(deletions);
+				})
+				.then(() => undefined);
+		}
+		return Promise.resolve();
 	}
 
 	clear() {
