@@ -1,6 +1,6 @@
 {
   "name": "keyv-shrink",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Simple key-value storage with support for multiple backends with shrinking/cleanup support",
   "main": "src/index.js",
   "scripts": {
