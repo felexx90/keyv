@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MySidesTheyAreGone/keyv-shrink.git"
+    "url": "git+https://github.com/MySidesTheyAreGone/keyv.git"
   },
   "keywords": [
     "key",
@@ -25,9 +25,9 @@
   "author": "MySidesTheyAreGone <mysidestheyaregone@protonmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/MySidesTheyAreGone/keyv-shrink/issues"
+    "url": "https://github.com/MySidesTheyAreGone/keyv/issues"
   },
-  "homepage": "https://github.com/MySidesTheyAreGone/keyv-shrink",
+  "homepage": "https://github.com/MySidesTheyAreGone/keyv",
   "dependencies": {
     "json-buffer": "3.0.0"
   },
