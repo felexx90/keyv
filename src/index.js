@@ -1,21 +1,15 @@
 'use strict';
 
-const EventEmitter = require('events');
+const EventEmitter = require('eventemitter2');
 const JSONB = require('json-buffer');
 
 const loadStore = opts => {
 	const adapters = {
-		redis: '@keyv/redis',
-		mongodb: '@keyv/mongo',
-		mongo: '@keyv/mongo',
-		sqlite: 'keyv-sqlite-shrink',
-		postgresql: 'keyv-postgres-shrink',
-		postgres: 'keyv-postgres-shrink',
-		mysql: 'keyv-mysql-shrink'
+		sqlite: require('./keyv-sqlite-shrink')
 	};
 	if (opts.adapter || opts.uri) {
 		const adapter = opts.adapter || /^[^:]*/.exec(opts.uri)[0];
-		return new (require(adapters[adapter]))(opts);
+		return new (adapters[adapter])(opts);
 	}
 	return new Map();
 };

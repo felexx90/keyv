@@ -1,7 +1,7 @@
 {
-  "name": "keyv-shrink",
+  "name": "react-native-keyv-shrink",
   "version": "2.0.3",
-  "description": "Simple key-value storage with support for multiple backends with shrinking/cleanup support",
+  "description": "Simple key-value storage with support for sqlite3 with shrinking/cleanup support",
   "main": "src/index.js",
   "scripts": {
     "test": "xo && nyc ava test/keyv.js",
@@ -29,16 +29,16 @@
   },
   "homepage": "https://github.com/MySidesTheyAreGone/keyv",
   "dependencies": {
-    "json-buffer": "3.0.0"
+    "eventemitter2": "^4.1.2",
+    "json-buffer": "3.0.0",
+    "pify": "^3.0.0",
+    "sql": "^0.78.0"
   },
   "devDependencies": {
+    "react-native-sqlite-2": "*",
     "ava": "^0.22.0",
     "coveralls": "^2.13.1",
     "eslint-config-xo-lukechilds": "^1.0.0",
-    "@keyv/mongo": "*",
-    "@keyv/redis": "*",
-    "keyv-mysql-shrink": "*",
-    "keyv-postgres-shrink": "*",
     "keyv-sqlite-shrink": "*",
     "@keyv/test-suite": "*",
     "nyc": "^11.0.3",
