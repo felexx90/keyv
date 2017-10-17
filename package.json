@@ -32,7 +32,7 @@
     "eventemitter2": "^4.1.2",
     "json-buffer": "3.0.0",
     "pify": "^3.0.0",
-    "sql": "^0.78.0"
+    "react-native-sql": "git+https://github.com/felexx90/node-sql.git"
   },
   "devDependencies": {
     "react-native-sqlite-2": "*",

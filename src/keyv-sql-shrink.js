@@ -1,7 +1,7 @@
 'use strict';
 
 const EventEmitter = require('eventemitter2');
-const Sql = require('sql').Sql;
+const Sql = require('react-native-sql').Sql;
 
 class KeyvSql extends EventEmitter {
   constructor(opts) {
