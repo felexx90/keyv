@@ -1,8 +1,7 @@
 'use strict';
 
 const KeyvSql = require('./keyv-sql-shrink');
-const sqlite3 = require('react-native-sqlite-2');
-const pify = require('pify');
+const sqlite3 = require('react-native-sqlite-2').default;
 
 class KeyvSqlite extends KeyvSql {
   constructor(opts) {
@@ -13,18 +12,32 @@ class KeyvSqlite extends KeyvSql {
     opts.db = opts.uri.replace(/^sqlite:\/\//, '');
 
     opts.connect = () => new Promise((resolve, reject) => {
-      const db = new sqlite3.Database(opts.db, err => {
-        if (err) {
-          reject(err);
-        } else {
-          if (opts.busyTimeout) {
-            db.configure('busyTimeout', opts.busyTimeout);
-          }
-          resolve(db);
-        }
-      });
-    })
-    .then(db => pify(db.all).bind(db));
+      const db = sqlite3.openDatabase(opts.db, '1.0', 'Test Database', 200000);
+      resolve(db);
+    }).then(db => {
+      const executeSql = function(stringSql, params = []) {
+        return new Promise((resolve, reject) => {
+          db.transaction((tx) => {
+            console.log(stringSql, params);
+            console.log(tx);
+            tx.executeSql(stringSql, params, (tx, results) => {
+              let rows = [];
+              let len = results.rows.length;
+              for (let i = 0; i < len; i++) {
+                let row = results.rows.item(i);
+                rows.push(row);
+              }
+              console.log(rows);
+              resolve(rows);
+            }, (err) => {
+              console.log(err);
+              reject(err);
+            });
+          });
+        });
+      };
+      return executeSql;
+    });
 
     super(opts);
   }
