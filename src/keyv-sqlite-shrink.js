@@ -18,8 +18,6 @@ class KeyvSqlite extends KeyvSql {
       const executeSql = function(stringSql, params = []) {
         return new Promise((resolve, reject) => {
           db.transaction((tx) => {
-            console.log(stringSql, params);
-            console.log(tx);
             tx.executeSql(stringSql, params, (tx, results) => {
               let rows = [];
               let len = results.rows.length;
@@ -27,10 +25,8 @@ class KeyvSqlite extends KeyvSql {
                 let row = results.rows.item(i);
                 rows.push(row);
               }
-              console.log(rows);
               resolve(rows);
             }, (err) => {
-              console.log(err);
               reject(err);
             });
           });
