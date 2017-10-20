@@ -49,7 +49,7 @@ class KeyvSql extends EventEmitter {
       if (row === undefined) {
         return undefined;
       }
-      if (row.expiry !== null && row.expiry < Date.now()) {
+      if (row.expiry !== null && row.expiry < Math.round(Date.now()/1000)) {
         this.delete(key);
         return undefined;
       }
@@ -63,7 +63,7 @@ class KeyvSql extends EventEmitter {
     }
     let expiry;
     if (typeof ttl === 'number') {
-      expiry = Date.now() + ttl;
+      expiry = Math.round((Date.now() + ttl)/1000);
     } else {
       expiry = null;
     }
